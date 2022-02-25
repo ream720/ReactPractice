@@ -1,12 +1,17 @@
+import React, { useState } from "react";
 import Card from "../UI/Card";
 import ExpenseDate from "./ExpenseDate";
 import "./ExpenseItem.css";
 
 const ExpenseItem = (props) => {
-  let title = props.title;
+
+  //useState hook returns new variable called title in a 2-elemt array
+  //setTitle function changes value of title
+  const [title, setTitle] = useState(props.title);
 
   const clickHandler = () => {
-    title = 'UPDATED';
+    setTitle('UPDATED');
+    console.log(title);
   };
 
   return (
