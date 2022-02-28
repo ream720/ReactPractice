@@ -11,12 +11,27 @@ const Expenses = (props) => {
     setFilteredYear(selectedYear);
   };
 
-      // will return true if the year stored in items Date is the same as the year
-      //selected in filteredYear, false otherwise
-  const filteredExpenses = props.items.filter(expense => {
-      return expense.date.getFullYear().toString() === filteredYear;
-    }
-  );
+  // will return true if the year stored in items Date is the same as the year
+  //selected in filteredYear, false otherwise
+  const filteredExpenses = props.items.filter((expense) => {
+    return expense.date.getFullYear().toString() === filteredYear;
+  });
+
+  //if filteredExpenses is empty, render informative <p>.
+  let expensesContent = <p>No expenses found.</p>
+
+  // if filteredExpenses is not empty, render expense items
+  // based on filteredExpenses results
+  if(filteredExpenses.length > 0 ) {
+    expensesContent = filteredExpenses.map((expense) => (
+      <ExpenseItem
+        key={expense.id}
+        title={expense.title}
+        amount={expense.amount}
+        date={expense.date}
+      />
+    ));
+  }
 
   return (
     <div>
@@ -25,15 +40,8 @@ const Expenses = (props) => {
           selected={filteredYear}
           onChangeFilter={filterChangeHandler}
         />
-        {/* outputting expense items as a mapped array of ExpenseItems */}
-        {filteredExpenses.map((expense) => (
-          <ExpenseItem
-            key={expense.id}
-            title={expense.title}
-            amount={expense.amount}
-            date={expense.date}
-          />
-        ))}
+        {/* renders based on expensesContent variable defined above */}
+         {expensesContent}
       </Card>
     </div>
   );
